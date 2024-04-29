@@ -1,19 +1,29 @@
-
-from flask import Flask, render_template, jsonify
+###########
+# IMPORTS #
+###########
+from flask import Flask, render_template,url_for, redirect, request
 from .modelli.models import Persona, Test
 from .modelli.forms import testPostForm
 
-# wtforms
-
-
+# APP
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key_here'
 
 
 
-# route di default
-@app.route("/persone")
+
+##########
+# ROUTES #
+##########
+
+# default
+@app.route("/")
 def default():
+    return redirect(url_for("persone"))
+
+# get / persone
+@app.route("/persone")
+def persone():
     # simulazione di una serie di dati della classe selezionata 
     data = [Persona("John", "Doe"), Persona("Jane", "Doe"), Persona("Riccardo", "Tognetti"), Persona("Leonardo", "Brugnara")]
     
@@ -22,6 +32,7 @@ def default():
 
     return render_template("home.html", data=data, attr=attribute_names)
 
+# get / test
 @app.route("/test")
 def getTest():
     # simulazione di una serie di dati della classe selezionata
@@ -32,13 +43,13 @@ def getTest():
     
     return render_template("home.html", data=data, attr=attribute_names) 
 
-
+# post / forms
 @app.route("/forms", methods=['GET', 'POST'])
 def forms():
-    form = testPostForm()
+    form = testPostForm(request.form)
 
-    if form.validate_on_submit():
-        name = form.nome.data
-        return f"Hello, { name }!"
+    if request.method == 'POST' and form.validate():
+        print(form.nome.data)
+        return redirect(url_for("persone"))
 
     return render_template("forms.html", form=form)
