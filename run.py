@@ -1,8 +1,5 @@
-# Flask
-# import os
-from flask import Flask, render_template, jsonify
 
-# Models
+from flask import Flask, render_template, jsonify
 
 # FIXME: 1) risolvere problema del modello non trovato
 # from modelli.models import Persona 
@@ -10,20 +7,25 @@ from flask import Flask, render_template, jsonify
 app = Flask(__name__)
 
 # route di default
-@app.route("/")
+@app.route("/persone")
 def default():
-    # la cartella di default per i file è templates
-    people = [Persona("John", "Doe"), Persona("Jane", "Doe"), Persona("Riccardo", "Tognetti"), Persona("Leonardo", "Brugnara")]
-    cols = ["nome", "cognome"]
-    # attribute_names = [attr for attr in dir(Persona("", "")) if not attr.startswith("__")]
-    
-    return render_template("home.html", people=people, cols=cols)
 
-@app.route("/api/test")
+    data = [Persona("John", "Doe"), Persona("Jane", "Doe"), Persona("Riccardo", "Tognetti"), Persona("Leonardo", "Brugnara")]
+    
+    attribute_names = [attr for attr in dir(Persona("", "")) if not attr.startswith("__")]
+    
+    return render_template("home.html", data=data, attr=attribute_names)
+
+@app.route("/test")
 def getTest():
 
-    pass
-    # Convert the dictionary to JSON using jsonify
+    data = [Test("John", "Doe"), Test("Jane", "Doe"), Test("Riccardo", "Tognetti"), Test("Leonardo", "Brugnara")]
+    # people = Test("John", "Doe")
+
+    # prende tutti gli attributi della classs di'interesse
+    attribute_names = [attr for attr in dir(Test("", "")) if not attr.startswith("__")]
+    
+    return render_template("home.html", data=data, attr=attribute_names) 
 
 #FIXME: 2) spostare le righe seguenti in models.py appena risolto il fixme precedente
 

@@ -14,18 +14,18 @@
     <table id="myTable" class="display">
         <thead>
             <tr>
-                {% for attribute_name in cols %}
+                {% for attribute_name in attr %}
                 <th>{{ attribute_name }}</th>
                 {% endfor %}
-
             </tr>
         </thead>
         <tbody>
-            {% for item in people %}
+            {% for item in data %}
             <tr>
-                <td>{{ item.nome }}</td>
-                <td>{{ item.cognome }}</td>
-            </tr>          
+                {% for attribute_name in attribute_names %}
+                <td>{{ item[attribute_name] }}</td>
+                {% endfor %}
+            </tr>
             {% endfor %}
         </tbody>
     </table>
@@ -36,6 +36,10 @@
         $(document).ready( function () {
             $('#myTable').DataTable();
         } );
+
+        function setDynamicAttributes(element, attributes) {
+            // for(let attribute in attributes)
+        }
     </script>
 </body>
 </html>
