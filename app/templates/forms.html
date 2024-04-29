@@ -6,10 +6,17 @@
     <title>Forms</title>
 </head>
 <body>
-    <form action="" method="POST">
-        {{ wtforms.form_field(form.name) }}
-        {{ wtforms.form_field(form.cognome) }}
-        {{ wtforms.form_field(form.submit) }}
-    </form>
+    {% from "_formhelpers.html" import render_field %}
+        <form method=post>
+            <dl>
+                {{ render_field(form.nome) }}
+            </dl>
+            <p>
+                <input 
+                  type=submit
+                  value="aggiungi"
+                >
+            </p>
+        </form>
 </body>
 </html>
