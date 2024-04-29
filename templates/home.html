@@ -3,12 +3,13 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- FIXME: 3) sistemare import di datatables -->
-        <!-- <link rel="stylesheet" href="/DataTables/datatables.css" /> -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.datatables.net/2.0.5/css/dataTables.dataTables.css" />
     <title>Home</title>
 </head>
 <body>
-    <h1>hello</h1>
+
+    <h1>Home</h1>
 
     <table id="myTable" class="display">
         <thead>
@@ -28,7 +29,13 @@
             {% endfor %}
         </tbody>
     </table>
-    <!-- FIXME: 3) sistemare import di datatables -->
-    <!-- <script src="/DataTables/datatables.js"></script> -->
+  
+    <script src="https://cdn.datatables.net/2.0.5/js/dataTables.js"></script>
+
+    <script>
+        $(document).ready( function () {
+            $('#myTable').DataTable();
+        } );
+    </script>
 </body>
 </html>
