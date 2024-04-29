@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- FIXME: 3) sistemare import di datatables -->
+        <!-- <link rel="stylesheet" href="/DataTables/datatables.css" /> -->
+    <title>Home</title>
+</head>
+<body>
+    <h1>hello</h1>
+
+    <table id="myTable" class="display">
+        <thead>
+            <tr>
+                {% for attribute_name in cols %}
+                <th>{{ attribute_name }}</th>
+                {% endfor %}
+
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in people %}
+            <tr>
+                <td>{{ item.nome }}</td>
+                <td>{{ item.cognome }}</td>
+            </tr>          
+            {% endfor %}
+        </tbody>
+    </table>
+    <!-- FIXME: 3) sistemare import di datatables -->
+    <!-- <script src="/DataTables/datatables.js"></script> -->
+</body>
+</html>
