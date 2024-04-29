@@ -9,24 +9,26 @@ app = Flask(__name__)
 # route di default
 @app.route("/persone")
 def default():
-
+    # simulazione di una serie di dati della classe selezionata 
     data = [Persona("John", "Doe"), Persona("Jane", "Doe"), Persona("Riccardo", "Tognetti"), Persona("Leonardo", "Brugnara")]
     
+    # prende tutti gli attributi della classs di'interesse
     attribute_names = [attr for attr in dir(Persona("", "")) if not attr.startswith("__")]
-    
+
     return render_template("home.html", data=data, attr=attribute_names)
 
 @app.route("/test")
 def getTest():
-
+    # simulazione di una serie di dati della classe selezionata
     data = [Test("John", "Doe"), Test("Jane", "Doe"), Test("Riccardo", "Tognetti"), Test("Leonardo", "Brugnara")]
-    # people = Test("John", "Doe")
 
     # prende tutti gli attributi della classs di'interesse
     attribute_names = [attr for attr in dir(Test("", "")) if not attr.startswith("__")]
     
     return render_template("home.html", data=data, attr=attribute_names) 
 
+
+# -------------------------------------------------------------------------
 #FIXME: 2) spostare le righe seguenti in models.py appena risolto il fixme precedente
 
 class Persona:
