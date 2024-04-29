@@ -1,10 +1,15 @@
 
 from flask import Flask, render_template, jsonify
+from flask_wtf import FlaskForm
+from wtforms import StringField, SubmitField
+from wtforms.validators import DataRequired
+from .modelli.models import Persona, Test
 
-# FIXME: 1) risolvere problema del modello non trovato
-# from modelli.models import Persona 
+
 
 app = Flask(__name__)
+
+
 
 # route di default
 @app.route("/persone")
@@ -26,20 +31,3 @@ def getTest():
     attribute_names = [attr for attr in dir(Test("", "")) if not attr.startswith("__")]
     
     return render_template("home.html", data=data, attr=attribute_names) 
-
-
-# -------------------------------------------------------------------------
-#FIXME: 2) spostare le righe seguenti in models.py appena risolto il fixme precedente
-
-class Persona:
-
-    def __init__(self, nome, cognome):
-        self.nome = nome
-        self.cognome = cognome
-
-
-class Test:
-
-    def __init__(self, name, surname):
-        self.name = name
-        self.surname = surname
