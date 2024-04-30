@@ -11,5 +11,10 @@ Come far partire questo progetto
  - fai partire il codice utilizzando il comando **flask --app app/run run**
  - visualizza l'applicazione visitando **localhost:5000**
 
+## Route del progetto
+ - **/persone** la route per la visualizzazione della classe persone
+ - **/test** la route per la visualizzazione della classe test
+ - **/forms/(classname)** dove classname è una tra "persone" o "test"
+
 ## About
- - 
+
