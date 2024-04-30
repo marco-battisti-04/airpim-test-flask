@@ -19,3 +19,14 @@ class newPersonaForm(Form):
 class newTestForm(Form):
     name = StringField('name', [validators.Length(min=2)])
     surname = StringField('surname', [validators.Length(min=2)])
+
+
+
+class interact_with_forms:
+
+    # aggiungi in lowercase le classi che si vogliono interagire
+    def getFormClasses():
+        return {
+            "persona": newPersonaForm,
+            "test": newTestForm
+        }
