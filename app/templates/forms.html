@@ -1,22 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Forms</title>
-</head>
-<body>
-    {% from "_formhelpers.html" import render_field %}
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Forms</title>
+    </head>
+    <body>
+        <h1>Forms</h1>
+        {% from "_formhelpers.html" import render_field %}
         <form method=post>
-            <dl>
-                {{ render_field(form.nome) }}
+            <dl class="imputs">
+                {% for field in fields %}
+                    {{ render_field(form[field]) }}
+                {% endfor %}
             </dl>
             <p>
-                <input 
-                  type=submit
-                  value="aggiungi"
-                >
-            </p>
-        </form>
-</body>
+                <input
+                    type=submit
+                    name=""
+                    >
+                </p>
+            </form>
+    </body>
 </html>
