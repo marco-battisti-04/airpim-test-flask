@@ -5,13 +5,15 @@
 from flask import Flask, render_template,url_for, redirect, request
 from json import JSONEncoder
 from .modelli.models import Persona, Test
-from .modelli.forms import testPostForm, interact_with_forms
+from .modelli.forms import  interact_with_forms
 from .modelli import models
 
 import inspect
 import json
+import sqlite3
+
 ##############
-# END ROUTES #
+# END IMPORTS #
 #endregion ###
 
 # APP
@@ -27,6 +29,36 @@ class_list_mapping = {
     "persona": personeList,
     "test": testList
 }
+
+############
+# DATABASE #
+#region ####
+
+def get_db_connection():
+    conn = sqlite3.connect('app/database/database.db')
+    conn.row_factory = sqlite3.Row
+    return conn
+
+def get_all_from_tables(table_name):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    rows = cursor.execute('SELECT * FROM {table_name}').fetchall()
+
+    data = []
+    for row in rows:
+        data.append(dict(zip([col[0] for col in cursor.description], row)))
+
+    json_data = json.dumps(data)
+    print(json_data)
+
+    conn.close()
+    return json_data
+
+
+# get_all_from_tables()
+################
+# END DATABASE #
+#endregion #####
 
 ##########
 # ROUTES #
@@ -50,7 +82,7 @@ def persona():
 
 # get / test
 @app.route("/test")
-def getTest():
+def test():
 
     # prende tutti gli attributi della classs di'interesse
     attribute_names = [attr for attr in dir(Test("", "")) if not attr.startswith("__")]
@@ -104,11 +136,16 @@ def forms(wanted_form_class):
 
     return render_template("forms.html", form=form, fields=fields)
 
+@app.errorhandler(500)
+def internal_server_error(e):
+    return render_template('500.html'), 500
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('./errors/404.html'), 404
+
 ##############
 # END ROUTES #
 #endregion ###
 
-class MyClass:
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
+
