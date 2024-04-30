@@ -22,6 +22,7 @@ app.config['SECRET_KEY'] = 'your_secret_key_here'
 testList = [Test("John", "Doe"), Test("Jane", "Doe"), Test("Riccardo", "Tognetti"), Test("Leonardo", "Brugnara")]
 personeList = [Persona("John", "Doe"), Persona("Jane", "Doe"), Persona("Riccardo", "Tognetti"), Persona("Leonardo", "Brugnara")]
 
+# mappa delle liste per far capire all'interfaccia quale lista confrontare
 class_list_mapping = {
     "persona": personeList,
     "test": testList
@@ -59,20 +60,26 @@ def getTest():
     return render_template("home.html", data=testList, attr=attribute_names, addtext=add_text, addink=add_link)
 
 # get & post / forms
-@app.route("/forms/<form_class>", methods=['GET', 'POST'])
-def forms(form_class):
-
+@app.route("/forms/<wanted_form_class>", methods=['GET', 'POST'])
+def forms(wanted_form_class):
+    # prende tutti i nomi di tutti i modelli
     class_names = [obj for obj in dir(models) if inspect.isclass(getattr(models, obj))]
 
-    form_name = form_class.lower()
+    # prende il nome della classe passata come parametro e la mette in lowercase
+    wanted_form_name = wanted_form_class.lower()
+
+    # cerca il nome della classe selezionato tra i modelli
     attribute_names = []
     for class_name in class_names:
-        if form_name in class_name.lower():
+        if wanted_form_name in class_name.lower():
             class_obj = globals()[class_name]
+
+            # prende i suoi attributi
             attribute_names = [attr for attr in dir(class_obj) if not attr.startswith("__")]
 
+    # prende i le varie possibilita per la creazione del form in base al modello
     classes_list = interact_with_forms.getFormClasses()
-    form_classes = classes_list.get(form_name)
+    form_classes = classes_list.get(wanted_form_name)
     form = form_classes(request.form)
     fields = attribute_names
 
@@ -84,7 +91,7 @@ def forms(form_class):
         # cerca la classe giusta
         current_class = ""
         for class_name in class_names:
-            if form_name in class_name.lower():
+            if wanted_form_name in class_name.lower():
 
                 # crea un nuovo oggetto
                 current_class = class_name
